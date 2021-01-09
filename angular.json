@@ -61,6 +61,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
+            "port": 5000,
             "browserTarget": "angular-until-destroyed:build"
           },
           "configurations": {
@@ -115,6 +116,46 @@
             "production": {
               "devServerTarget": "angular-until-destroyed:serve:production"
             }
+          }
+        }
+      }
+    },
+    "until-destroyed": {
+      "projectType": "library",
+      "root": "projects/until-destroyed",
+      "sourceRoot": "projects/until-destroyed/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/until-destroyed/tsconfig.lib.json",
+            "project": "projects/until-destroyed/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/until-destroyed/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/until-destroyed/src/test.ts",
+            "tsConfig": "projects/until-destroyed/tsconfig.spec.json",
+            "karmaConfig": "projects/until-destroyed/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/until-destroyed/tsconfig.lib.json",
+              "projects/until-destroyed/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         }
       }
