@@ -9,9 +9,6 @@ export class Demo1Service {
   constructor() {
     untilDestroyed(this);
   }
-  ngOnDestroy(): void {
-    console.log("ДЕМО1 - удален")
-  }
 }
 
 @UntilDestroy()
