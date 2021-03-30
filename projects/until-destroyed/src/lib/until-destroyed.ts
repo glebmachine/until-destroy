@@ -9,7 +9,7 @@ let count = 0;
 
 const aliveList = window['untilDestroyedAliveList'] = [];
 /* Для проверки на активные обработчики
-TODO: НАдо удалить все отладки, как тока станет понятно, что оно работает, не позже февраля!!
+TODO: Надо удалить все отладки, как только станет понятно, что оно работает, не позже февраля!!
 ```
 Object.keys(untilDestroyedStatusMap).forEach(k => {
     if (!untilDestroyedStatusMap[k]) {
@@ -74,9 +74,8 @@ export function untilDestroyed<T>(_instance: any): MonoTypeOperatorFunction<T> {
     instance.__proto__.counter = 0;
   }
 
-  /* Экстендим инстанс, елси он еще не был расширен
+  /* Экстендим инстанс, если он еще не был расширен
    * Cоздаем стрим в экземпляре
-   * Cоздаем хук в экземпляре
    * Cоздаем хук в экземпляре
   */
   if (!instance.__onDestroyStream$) {
@@ -85,7 +84,7 @@ export function untilDestroyed<T>(_instance: any): MonoTypeOperatorFunction<T> {
     instance.__uid = instance.__proto__.counter;
     instance.__name = `${instance.__proto__.constructor.name} ${instance.__uid}`;
 
-    // Тот самый секретный метод, что будет делать реальную работу с стримом
+    // Тот самый секретный метод, что будет делать реальную работу со стримом
     instance.__onDestroyHook = function(): void {
       this.__onDestroyStream$.next(true);
       this.__onDestroyStream$.complete();
@@ -105,10 +104,10 @@ export function untilDestroyed<T>(_instance: any): MonoTypeOperatorFunction<T> {
     if (!isRuntime) {
       /*
        Если мы еще не в забустрапленом компоненте, то
-       патчим ему прототип так, чтобы ангуляр подумал что у него есть ngOnDestroy
+       патчим ему прототип так, чтобы ангуляр подумал, что у него есть ngOnDestroy
        и прописал его в хуки TView самостоятельно.
-       Потом при вызове этого хука он до идее пригнет в имплементацию
-       и там отработает уже нащ секретный хук
+       Потом при вызове этого хука он по идее прыгнет в имплементацию
+       и там отработает уже наш секретный хук
       */
       if (isView) {
         console.warn('Ты используешь untilDestroyed() в контрукторе, не делай так. \r\n\ Я конечно сработаю, но лучше так не делать!');
@@ -139,7 +138,7 @@ export function untilDestroyed<T>(_instance: any): MonoTypeOperatorFunction<T> {
         }
       } else {
         // Почему не вынесено на уровень выше сразу для всех:
-        // Чтобы уменьшить колчество проверок в блоке выше
+        // Чтобы уменьшить количество проверок в блоке выше
         ensureNgOnDestroyPatched(instance.__proto__);
       }
 
